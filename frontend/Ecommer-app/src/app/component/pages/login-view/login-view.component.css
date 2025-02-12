@@ -1,0 +1,145 @@
+/* Đặt nền cho trang với gradient từ màu hồng tới trắng */
+.background {
+    background: linear-gradient(to bottom, pink, white);
+    min-height: 100vh;
+    padding-top: 50px; /* Đảm bảo khoảng cách phía trên */
+}
+
+/* Thiết lập card với bo tròn góc và bóng đổ */
+.card {
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Padding cho phần card body */
+.card-body {
+    padding: 30px;
+}
+
+/* Định dạng h2 (tiêu đề) */
+h2 {
+    font-size: 24px;
+}
+
+/* Thêm bo tròn cho các input trường */
+input.form-control.rounded-xl {
+    border-radius: 40px;
+}
+
+/* Định dạng cho phần đường gạch ngang giữa */
+.d-flex.align-items-center {
+    display: flex;
+    align-items: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.d-flex.align-items-center hr {
+    flex-grow: 1;
+    border: 0;
+    border-top: 1px solid #ccc;
+}
+
+/* Định dạng cho các link trong phần text-center */
+.text-center a {
+    font-size: 14px;
+    color: #007bff;
+    text-decoration: none;
+    margin-top: 15px;
+}
+
+.text-center a:hover {
+    text-decoration: underline;
+}
+
+/* Hiệu ứng Hover cho nút Đăng nhập */
+.login-btn-primary {
+    background-color: #007bff; /* Màu nền mặc định */
+    border: none;
+    transition: background-color 0.3s ease, transform 0.3s ease; /* Thêm hiệu ứng mượt mà */
+}
+
+.login-btn-primary:hover {
+    background-color: #0056b3; /* Màu nền khi hover */
+    color: red;
+    transform: scale(1.05);
+}
+
+/* Nếu bạn muốn có hiệu ứng thêm cho focus (khi nút được chọn) */
+.login-btn-primary:focus {
+    outline: none;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.5); /* Hiệu ứng viền sáng */
+}
+
+/* Định dạng cho email và mật khẩu input */
+input.form-control {
+    font-size: 14px; /* Thêm kích thước font cho các trường input */
+    padding: 10px; /* Thêm padding cho các input */
+}
+
+/* Định dạng cho các thông báo lỗi */
+.text-danger {
+    font-size: 12px;
+    color: red;
+}
+
+/* Thiết lập cho khoảng cách giữa các ô input */
+.mb-3 {
+    margin-bottom: 15px;
+}
+
+/* Định dạng cho phần chữ "Quên mật khẩu" và link đăng ký */
+.d-flex.justify-content-between {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+}
+
+/* Định dạng cho link quên mật khẩu */
+a.text-decoration-none {
+    color: #007bff;
+}
+
+a.text-decoration-none:hover {
+    text-decoration: underline;
+    color: red;
+}
+
+/* Định dạng cho các phần tử chứa form */
+.form-label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #333;
+}
+
+/* Đảm bảo nút Đăng nhập chiếm toàn bộ chiều rộng */
+.w-100 {
+    width: 100%;
+}
+/* Thêm icon vào phần Đăng Ký */
+.social-icons a {
+    font-size: 24px;
+    color: #555;
+    margin: 0 10px;
+    text-decoration: none;
+}
+
+.social-icons a:hover {
+    color: #007bff; /* Màu thay đổi khi hover */
+}
+
+.social-icon.facebook {
+    color: #3b5998; /* Màu của Facebook */
+}
+
+.social-icon.google {
+    color: #db4437; /* Màu của Google */
+}
+
+.social-icon.twitter {
+    color: #1da1f2; /* Màu của Twitter */
+}
+
+.social-icons {
+    margin-top: 20px;
+}

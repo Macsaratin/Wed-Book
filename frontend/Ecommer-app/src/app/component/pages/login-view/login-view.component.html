@@ -1,0 +1,57 @@
+<div class="background">
+    <div class="container mt-6">
+      <div class="row justify-content-center">
+        <div class="col-md-6">
+          <div class="card">
+            <div class="card-body">
+              <h2 class="text-center mb-4">Đăng nhập</h2>
+              <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
+                <!-- Email Field -->
+                <div class="mb-3">
+                  <input id="email" type="email" class="form-control rounded-xl" formControlName="email" placeholder="Nhập email" />
+                  <div *ngIf="loginForm.controls['email'].invalid && loginForm.controls['email'].touched" class="text-danger">
+                    <small>Email không hợp lệ</small>
+                  </div>
+                </div>
+  
+                <!-- Password Field -->
+                <div class="mb-3">
+                  <input id="password" type="password" class="form-control rounded-xl" formControlName="password" placeholder="Nhập mật khẩu" />
+                  <div *ngIf="loginForm.controls['password'].invalid && loginForm.controls['password'].touched" class="text-danger">
+                    <small>Mật khẩu tối thiểu 6 ký tự</small>
+                  </div>
+                </div>
+  
+                <div class="d-flex justify-content-between">
+                  <a href="/forgot-password" class="text-decoration-none">Quên Mật Khẩu?</a>
+                </div>
+  
+                <div class="d-flex align-items-center mt-3 mb-3">
+                  <hr class="flex-grow-1" />
+                  <span class="px-2">Chưa có tài khoản?</span>
+                  <hr class="flex-grow-1" />
+                </div>
+  
+                <!-- Signup Link -->
+                <div class="text-center">
+                  <a href="/sign-up" class="text-decoration-none">Đăng ký tài khoản mới</a>
+                </div>
+                    <!-- Social Media Icons -->
+                    <div class="social-icons text-center mt-4 pb-3">
+                        <a href="#" class="social-icon facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-icon google"><i class="fab fa-google"></i></a>
+                        <a href="#" class="social-icon twitter"><i class="fab fa-twitter"></i></a>
+                    </div>
+                    <div class="login-btn">
+                        <button type="submit" class="btn btn-primary w-100 rounded-xl" [disabled]="loginForm.invalid">
+                            Đăng nhập
+                        </button>
+                    </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
