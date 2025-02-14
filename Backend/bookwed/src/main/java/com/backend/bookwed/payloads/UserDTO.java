@@ -1,5 +1,6 @@
 package com.backend.bookwed.payloads;
 
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -23,5 +24,4 @@ public class UserDTO {
     private Set<Role> roles = new HashSet<>();
     private AddressDTO address;
     private CartDTO cart;
-
 }

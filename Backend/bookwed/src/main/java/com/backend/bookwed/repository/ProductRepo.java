@@ -9,9 +9,10 @@ import com.backend.bookwed.entity.Product;
 
 @Repository
 public interface ProductRepo extends JpaRepository<Product, Long> {
-    // Tìm kiếm theo tên sản phẩm với chuỗi ký tự bất kỳ
+    // Tìm kiếm sản phẩm theo tên
     Page<Product> findByProductNameContaining(String keyword, Pageable pageDetails);
 
     // Tìm kiếm sản phẩm theo categoryId
     Page<Product> findByCategoryCategoryId(Long categoryId, Pageable pageable);
+
 }

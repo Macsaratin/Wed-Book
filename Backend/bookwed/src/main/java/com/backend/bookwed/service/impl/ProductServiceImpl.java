@@ -33,6 +33,7 @@ import com.backend.bookwed.service.CartService;
 import com.backend.bookwed.service.FileService;
 import com.backend.bookwed.service.ProductService;
 
+import jakarta.annotation.PostConstruct;
 import jakarta.transaction.Transactional;
 
 @Transactional
@@ -55,8 +56,14 @@ public class ProductServiceImpl implements ProductService {
     @Autowired
     private ModelMapper modelMapper;
 
-    @Value("${project.image}")
-    private String path;
+    @Value("${project.image}/products")
+    private String basePath;
+
+    private String productPath;
+    @PostConstruct
+    public void init() {
+        this.productPath = basePath + "/products/";
+    }
 
     @Override
     public ProductDTO addProduct(Long categoryId, Product product) {
@@ -220,7 +227,7 @@ public class ProductServiceImpl implements ProductService {
             throw new APIException("Product not found with productId: " + productId);
         }
 
-        String fileName = fileService.uploadImage(path, image);
+        String fileName = fileService.uploadImage(basePath, image);
 
         productFromDB.setImage(fileName);
 
@@ -245,7 +252,10 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public InputStream getProductImage(String fileName) throws FileNotFoundException {
-        return fileService.getResource(path, fileName);
+        return fileService.getResource(productPath, fileName);
+    }
+    public String getProductPath() {
+        return productPath;
     }
 
 }
