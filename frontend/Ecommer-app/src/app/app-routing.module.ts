@@ -8,6 +8,7 @@ import { BannerViewComponent } from './component/pages/banner-view/banner-view.c
 
 // Guard để kiểm tra đăng nhập
 import { AuthGuard } from './service/auth.guard';
+import { UserListComponent } from './component/pages/user/user-list.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'admin/dashboard', pathMatch: 'full' },
@@ -19,7 +20,10 @@ const routes: Routes = [
     children: [
       { path: 'dashboard', component: DashboardComponent },
       { path: 'banner', component: BannerViewComponent },
+      { path: 'user-account', component: UserListComponent },
       { path: 'user', component: UserComponent },
+
+
     ],
   },
   { path: '**', redirectTo: 'login', pathMatch: 'full' }, // Điều hướng nếu route không tồn tại

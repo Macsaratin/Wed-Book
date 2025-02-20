@@ -19,7 +19,7 @@ export class BannerService {
   }
   async getList() {
     try {
-      const response = await axios.get(`${this.apiUrl}/banner`);
+      const response = await axios.get(`${this.apiUrl}/admin/banner`);
       return response.data;
     } catch (error) {
       console.error("Lỗi khi lấy danh sách banner:", error);

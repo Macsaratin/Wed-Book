@@ -11,6 +11,8 @@ import { BannerViewComponent } from './component/pages/banner-view/banner-view.c
 import { ProductViewComponent } from './component/pages/product-view/product-view.component';
 import { LoginComponent } from './component/pages/login/login.component';
 import { UserComponent } from './component/pages/user/user.component';
+import { UserListComponent } from './component/pages/user/user-list.component';
+
 import { LayoutComponent } from './component/pages/layout/layout.component';
 
 @NgModule({
@@ -22,6 +24,8 @@ import { LayoutComponent } from './component/pages/layout/layout.component';
     ProductViewComponent,
     LoginComponent,
     UserComponent,
+    UserListComponent,
+
     LayoutComponent,
   ],
   imports: [

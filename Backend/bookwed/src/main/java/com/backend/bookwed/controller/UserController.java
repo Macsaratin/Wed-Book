@@ -1,5 +1,9 @@
 package com.backend.bookwed.controller;
 
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.backend.bookwed.config.AppConstants;
+import com.backend.bookwed.entity.User;
 import com.backend.bookwed.payloads.UserDTO;
 import com.backend.bookwed.payloads.UserResponse;
 import com.backend.bookwed.service.UserService;
@@ -42,7 +47,6 @@ public class UserController {
         UserResponse userResponse = userService.getAllUsers(pageNumber, pageSize, sortBy, sortOrder);
         return new ResponseEntity<>(userResponse, HttpStatus.OK);
     }
-
     @GetMapping("/public/users/{userId}")
     public ResponseEntity<UserDTO> getUser(@PathVariable Long userId) {
         UserDTO user = userService.getUserById(userId);

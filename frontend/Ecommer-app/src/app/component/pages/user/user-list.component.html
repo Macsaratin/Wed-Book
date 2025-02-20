@@ -1,0 +1,37 @@
+<div class="container mt-4">
+    <h2 class="text-center mb-4">Danh Sách Người Dùng</h2>
+
+    <div class="table-responsive">
+        <table class="table table-bordered text-center">
+            <thead class="table-dark">
+                <tr>
+                    <th>#</th>
+                    <th>Họ và Tên</th>
+                    <th>Email</th>
+                    <th>Số Điện Thoại</th>
+                    <th>Địa Chỉ</th>
+                    <th>Hành động</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let user of users; let i = index">
+                    <td>{{ i + 1 }}</td>
+                    <td>{{ user.firstName }} {{ user.lastName }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.mobileNumber }}</td>
+                    <td>
+                        <span>{{ user.address.country }}</span>
+                    </td>
+                    <td>
+                        <button class="btn btn-danger btn-sm" >Xóa</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Hiển thị khi không có dữ liệu -->
+    <div *ngIf="users.length === 0" class="text-center mt-3">
+        <p>Không có người dùng nào!</p>
+    </div>
+</div>
