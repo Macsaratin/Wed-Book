@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google" value="notranslate">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        .content {
+            flex: 1;
+        }
+        .footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+        .footer a {
+            color: #ffcc00;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <nav class="main-menu">
+        <div class="scrollbar" id="style-1">
+            <ul>
+                <li>
+                    <a routerLink="/dashboard">
+                        <i class="fa fa-home fa-lg"></i>
+                        <span class="nav-text">Home</span>
+                    </a>
+                </li>
+                <li>
+                    <a routerLink="/banner">
+                        <i class="fa fa-bullhorn fa-lg"></i>
+                        <span class="nav-text">Banner</span>
+                    </a>
+                </li>
+                <li>
+                    <a routerLink="/user">
+                        <i class="fa fa-user fa-lg"></i>
+                        <span class="nav-text">Account</span>
+                    </a>
+                </li>
+                <li>
+                    <a routerLink="/contact">
+                        <i class="fa fa-envelope-o fa-lg"></i>
+                        <span class="nav-text">Contact</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Nội dung của trang -->
+    <div class="content">
+        <router-outlet></router-outlet>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 Your Company. All rights reserved.</p>
+            <p>Contact: <a href="mailto:support@yourcompany.com">supportyourcompany.com</a></p>
+        </div>
+    </footer>
+</body>
+</html>

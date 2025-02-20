@@ -1,0 +1,16 @@
+<div class="container mt-4">
+    <h2 class="text-center">User Profile</h2>
+    
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Thông tin cá nhân</h5>
+            <p><strong>Tên:</strong> {{ user.firstName }} {{ user.lastName }}</p>
+            <p><strong>Email:</strong> {{ user.email }}</p>
+            <p><strong>Mật khẩu:</strong> ********</p>
+            <p><strong>Phone:</strong> {{ user.mobileNumber }}</p>
+
+            <!-- Nút Logout -->
+            <button class="btn btn-danger mt-3" (click)="logout()">Đăng xuất</button>
+        </div>
+    </div>
+</div>
