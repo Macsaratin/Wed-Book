@@ -1,8 +1,8 @@
 package com.backend.bookwed.controller;
 
-import java.util.Collections;
+// import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
+// import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.backend.bookwed.config.AppConstants;
-import com.backend.bookwed.entity.User;
+// import com.backend.bookwed.entity.User;
 import com.backend.bookwed.payloads.UserDTO;
 import com.backend.bookwed.payloads.UserResponse;
 import com.backend.bookwed.service.UserService;
@@ -40,13 +40,28 @@ public class UserController {
 
     @GetMapping("/admin/users")
     public ResponseEntity<UserResponse> getUsers(
-            @RequestParam(name = "pageNumber", defaultValue = AppConstants.PAGE_NUMBER, required = false) Integer pageNumber,
-            @RequestParam(name = "pageSize", defaultValue = AppConstants.PAGE_SIZE, required = false) Integer pageSize,
-            @RequestParam(name = "sortBy", defaultValue = AppConstants.SORT_USERS_BY, required = false) String sortBy,
-            @RequestParam(name = "sortOrder", defaultValue = AppConstants.SORT_DIR, required = false) String sortOrder) {
-        UserResponse userResponse = userService.getAllUsers(pageNumber, pageSize, sortBy, sortOrder);
-        return new ResponseEntity<>(userResponse, HttpStatus.OK);
+        @RequestParam(name = "pageNumber", defaultValue = AppConstants.PAGE_NUMBER, required = false) Integer pageNumber,
+        @RequestParam(name = "pageSize", defaultValue = AppConstants.PAGE_SIZE, required = false) Integer pageSize,
+        @RequestParam(name = "sortBy", defaultValue = AppConstants.SORT_USERS_BY, required = false) String sortBy,
+        @RequestParam(name = "sortOrder", defaultValue = AppConstants.SORT_DIR, required = false) String sortOrder) {
+    UserResponse userResponse = userService.getAllUsers(pageNumber, pageSize, sortBy, sortOrder);
+    return new ResponseEntity<>(userResponse, HttpStatus.OK);
     }
+
+    @GetMapping("/admin/users/all")
+    public ResponseEntity<List<UserDTO>> getAllUsersWithoutPagination() {
+        List<UserDTO> users = userService.getAllUsersWithoutPagination();
+        return ResponseEntity.ok(users);
+    }
+    
+
+    @PutMapping("/admin/users/{userId}")
+    public ResponseEntity<UserDTO> updateUserByAdmin(@RequestBody UserDTO userDTO, @PathVariable Long userId) {
+        UserDTO updatedUser = userService.updateUser(userId, userDTO);
+        return new ResponseEntity<>(updatedUser, HttpStatus.OK);
+    }
+
+
     @GetMapping("/public/users/{userId}")
     public ResponseEntity<UserDTO> getUser(@PathVariable Long userId) {
         UserDTO user = userService.getUserById(userId);

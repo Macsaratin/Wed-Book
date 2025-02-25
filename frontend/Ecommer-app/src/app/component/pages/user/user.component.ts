@@ -15,9 +15,11 @@ export class UserComponent implements OnInit {
     private userService: UserService, 
     private authService: AuthService, 
     private router: Router
+    
   ) {}
 
   async ngOnInit() {
+    
     const email = localStorage.getItem("username");
     if (email) {
       try {
@@ -30,9 +32,7 @@ export class UserComponent implements OnInit {
     }
   }
 
-  logout() {
-    this.authService.logout().then(() => {
-      this.router.navigate(['/login']); // Chuyển về trang đăng nhập
-    }).catch(error => console.error("Lỗi khi đăng xuất:", error));
+  async logout() {
+      this.router.navigate(['/login']);
   }
 }

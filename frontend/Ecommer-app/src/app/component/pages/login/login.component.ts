@@ -8,37 +8,42 @@ import { Router } from '@angular/router';
   styleUrls: ['./login.component.css'],
 })
 export class LoginComponent implements OnInit {
+  username: string = '';
+  password: string = '';
+  errorMessage: string = '';
+  successMessage: string = '';
 
-  username: string = "";
-  password: string = "";
-  errorMessage: string = "";
-
-  @ViewChild('signUp') signUpButton!: ElementRef;
   @ViewChild('signIn') signInButton!: ElementRef;
   @ViewChild('container') container!: ElementRef;
 
-  constructor(private authService: AuthService, private router: Router) { }
+  constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit(): void {
     setTimeout(() => {
-      if (this.signUpButton && this.signInButton && this.container) {
-        this.signUpButton.nativeElement.addEventListener('click', () => {
-          this.container.nativeElement.classList.add("right-panel-active");
-        });
-
+      if (this.signInButton && this.container) {
         this.signInButton.nativeElement.addEventListener('click', () => {
-          this.container.nativeElement.classList.remove("right-panel-active");
+          this.container.nativeElement.classList.remove('right-panel-active');
         });
       }
-    });
+    }, 0);
   }
 
   async onLogin() {
     try {
       await this.authService.login({ username: this.username, password: this.password });
-      this.router.navigate(['/dashboard']); // Điều hướng sau khi đăng nhập thành công
-    } catch (error) {
-      this.errorMessage = "Sai tài khoản hoặc mật khẩu. Vui lòng thử lại.";
+      this.errorMessage = '';
+      this.successMessage = 'Đăng nhập thành công! Đang chuyển hướng...';
+      setTimeout(() => {
+        this.router.navigate(['/dashboard']);
+        this.successMessage = '';
+      }, 2000);
+    } catch (error: any) {
+      this.errorMessage = 'Sai tài khoản hoặc mật khẩu. Vui lòng thử lại.';
+      this.successMessage = '';
     }
+  }
+
+  goToRegister() {
+    this.router.navigate(['/register']); // Điều hướng sang trang đăng ký
   }
 }

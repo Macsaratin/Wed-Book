@@ -9,29 +9,29 @@
                     <th>Họ và Tên</th>
                     <th>Email</th>
                     <th>Số Điện Thoại</th>
-                    <th>Địa Chỉ</th>
+                    <th>Quyền</th>
                     <th>Hành động</th>
                 </tr>
             </thead>
-            <tbody>
-                <tr *ngFor="let user of users; let i = index">
+            <tbody id="user-table-body">
+                <tr *ngFor="let user of users | paginate: { itemsPerPage: itemsPerPage, currentPage: currentPage }; let i = index">
                     <td>{{ i + 1 }}</td>
                     <td>{{ user.firstName }} {{ user.lastName }}</td>
                     <td>{{ user.email }}</td>
                     <td>{{ user.mobileNumber }}</td>
-                    <td>
-                        <span>{{ user.address.country }}</span>
-                    </td>
-                    <td>
-                        <button class="btn btn-danger btn-sm" >Xóa</button>
+                    <td>{{ user.roles?.roleId}}</td>
+                    <td >
+                        <button class="btn btn-danger btn-sm me-2 ">Xóa</button>
+                        <a [routerLink]="['/user-account/edit', user.userId]" class="btn btn-primary btn-sm">Sửa</a>  
                     </td>
                 </tr>
             </tbody>
         </table>
+        <pagination-controls class="paginate" (pageChange)="currentPage = $event"></pagination-controls>
     </div>
 
-    <!-- Hiển thị khi không có dữ liệu -->
-    <div *ngIf="users.length === 0" class="text-center mt-3">
+    <div *ngIf="!users || users.length === 0" class="text-center mt-3">
         <p>Không có người dùng nào!</p>
     </div>
+    
 </div>

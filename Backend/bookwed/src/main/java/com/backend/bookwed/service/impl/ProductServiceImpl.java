@@ -4,17 +4,12 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -33,7 +28,6 @@ import com.backend.bookwed.service.CartService;
 import com.backend.bookwed.service.FileService;
 import com.backend.bookwed.service.ProductService;
 
-import jakarta.annotation.PostConstruct;
 import jakarta.transaction.Transactional;
 
 @Transactional
@@ -56,14 +50,8 @@ public class ProductServiceImpl implements ProductService {
     @Autowired
     private ModelMapper modelMapper;
 
-    @Value("${project.image}/products")
-    private String basePath;
-
-    private String productPath;
-    @PostConstruct
-    public void init() {
-        this.productPath = basePath + "/products/";
-    }
+    @Value("${project.image}/products/")
+    private String path;
 
     @Override
     public ProductDTO addProduct(Long categoryId, Product product) {
@@ -92,100 +80,100 @@ public class ProductServiceImpl implements ProductService {
         }
     }
 
-    @Override
-    public ProductResponse getAllProducts(Integer pageNumber, Integer pageSize, String sortBy, String sortOrder) {
-        Sort sortByAndOrder = sortOrder.equalsIgnoreCase("asc") ? Sort.by(sortBy).ascending()
-                : Sort.by(sortBy).descending();
-        Pageable pageDetails = PageRequest.of(pageNumber, pageSize, sortByAndOrder);
-        Page<Product> pageProducts = productRepo.findAll(pageDetails);
-        List<Product> products = pageProducts.getContent();
-        List<ProductDTO> productDTOs = products.stream().map(product -> modelMapper.map(product, ProductDTO.class))
-                .collect(Collectors.toList());
+    // @Override
+    // public ProductResponse getAllProducts(Integer pageNumber, Integer pageSize, String sortBy, String sortOrder) {
+    //     Sort sortByAndOrder = sortOrder.equalsIgnoreCase("asc") ? Sort.by(sortBy).ascending()
+    //             : Sort.by(sortBy).descending();
+    //     Pageable pageDetails = PageRequest.of(pageNumber, pageSize, sortByAndOrder);
+    //     Page<Product> pageProducts = productRepo.findAll(pageDetails);
+    //     List<Product> products = pageProducts.getContent();
+    //     List<ProductDTO> productDTOs = products.stream().map(product -> modelMapper.map(product, ProductDTO.class))
+    //             .collect(Collectors.toList());
 
-        ProductResponse productResponse = new ProductResponse();
-        productResponse.setContent(productDTOs);
-        productResponse.setPageNumber(pageProducts.getNumber());
-        productResponse.setPageSize(pageProducts.getSize());
-        productResponse.setTotalElements(pageProducts.getTotalElements());
-        productResponse.setTotalPages(pageProducts.getTotalPages());
-        productResponse.setLastPage(pageProducts.isLast());
+    //     ProductResponse productResponse = new ProductResponse();
+    //     productResponse.setContent(productDTOs);
+    //     productResponse.setPageNumber(pageProducts.getNumber());
+    //     productResponse.setPageSize(pageProducts.getSize());
+    //     productResponse.setTotalElements(pageProducts.getTotalElements());
+    //     productResponse.setTotalPages(pageProducts.getTotalPages());
+    //     productResponse.setLastPage(pageProducts.isLast());
 
-        return productResponse;
-    }
+    //     return productResponse;
+    // }
 
-    @Override
-    public ProductDTO getProductById(Long productId) {
-        Optional<Product> productOptional = productRepo.findById(productId);
-        if (productOptional.isPresent()) {
-            Product product = productOptional.get();
-            return modelMapper.map(product, ProductDTO.class);
-        } else {
-            throw new ResourceNotFoundException("Product", "productId", productId);
-        }
-    }
+    // @Override
+    // public ProductDTO getProductById(Long productId) {
+    //     Optional<Product> productOptional = productRepo.findById(productId);
+    //     if (productOptional.isPresent()) {
+    //         Product product = productOptional.get();
+    //         return modelMapper.map(product, ProductDTO.class);
+    //     } else {
+    //         throw new ResourceNotFoundException("Product", "productId", productId);
+    //     }
+    // }
 
-    @Override
-    public ProductResponse searchByCategory(Long categoryId, Integer pageNumber, Integer pageSize, String sortBy,
-            String sortOrder) {
-        // Category category = categoryRepo.findById(categoryId)
-        // .orElseThrow(() -> new ResourceNotFoundException("Category", "categoryId",
-        // categoryId));
-        Sort sortByAndOrder = sortOrder.equalsIgnoreCase("asc") ? Sort.by(sortBy).ascending()
-                : Sort.by(sortBy).descending();
+    // @Override
+    // public ProductResponse searchByCategory(Long categoryId, Integer pageNumber, Integer pageSize, String sortBy,
+    //         String sortOrder) {
+    //     // Category category = categoryRepo.findById(categoryId)
+    //     // .orElseThrow(() -> new ResourceNotFoundException("Category", "categoryId",
+    //     // categoryId));
+    //     Sort sortByAndOrder = sortOrder.equalsIgnoreCase("asc") ? Sort.by(sortBy).ascending()
+    //             : Sort.by(sortBy).descending();
 
-        Pageable pageDetails = PageRequest.of(pageNumber, pageSize, sortByAndOrder);
-        Page<Product> pageProducts = productRepo.findByCategoryCategoryId(categoryId, pageDetails);
+    //     Pageable pageDetails = PageRequest.of(pageNumber, pageSize, sortByAndOrder);
+    //     Page<Product> pageProducts = productRepo.findByCategoryCategoryId(categoryId, pageDetails);
 
-        List<Product> products = pageProducts.getContent();
+    //     List<Product> products = pageProducts.getContent();
 
-        // if (products.isEmpty()) {
-        // throw new APIException(category.getCategoryName() + " category doesn't
-        // contain any products !!!");
-        // }
+    //     // if (products.isEmpty()) {
+    //     // throw new APIException(category.getCategoryName() + " category doesn't
+    //     // contain any products !!!");
+    //     // }
 
-        List<ProductDTO> productDTOs = products.stream()
-                .map(p -> modelMapper.map(p, ProductDTO.class))
-                .collect(Collectors.toList());
+    //     List<ProductDTO> productDTOs = products.stream()
+    //             .map(p -> modelMapper.map(p, ProductDTO.class))
+    //             .collect(Collectors.toList());
 
-        ProductResponse productResponse = new ProductResponse();
-        productResponse.setContent(productDTOs);
-        productResponse.setPageNumber(pageProducts.getNumber());
-        productResponse.setPageSize(pageProducts.getSize());
-        productResponse.setTotalElements(pageProducts.getTotalElements());
-        productResponse.setTotalPages(pageProducts.getTotalPages());
-        productResponse.setLastPage(pageProducts.isLast());
+    //     ProductResponse productResponse = new ProductResponse();
+    //     productResponse.setContent(productDTOs);
+    //     productResponse.setPageNumber(pageProducts.getNumber());
+    //     productResponse.setPageSize(pageProducts.getSize());
+    //     productResponse.setTotalElements(pageProducts.getTotalElements());
+    //     productResponse.setTotalPages(pageProducts.getTotalPages());
+    //     productResponse.setLastPage(pageProducts.isLast());
 
-        return productResponse;
-    }
+    //     return productResponse;
+    // }
 
-    @Override
-    public ProductResponse searchProductByKeyword(String keyword, Long categoryId, Integer pageNumber, Integer pageSize,
-            String sortBy, String sortOrder) {
-        Sort sortByAndOrder = sortOrder.equalsIgnoreCase("asc") ? Sort.by(sortBy).ascending()
-                : Sort.by(sortBy).descending();
-        Pageable pageDetails = PageRequest.of(pageNumber, pageSize, sortByAndOrder);
-        Page<Product> pageProducts = productRepo.findByProductNameContaining(keyword, pageDetails);
-        List<Product> products = pageProducts.getContent();
+    // @Override
+    // public ProductResponse searchProductByKeyword(String keyword, Long categoryId, Integer pageNumber, Integer pageSize,
+    //         String sortBy, String sortOrder) {
+    //     Sort sortByAndOrder = sortOrder.equalsIgnoreCase("asc") ? Sort.by(sortBy).ascending()
+    //             : Sort.by(sortBy).descending();
+    //     Pageable pageDetails = PageRequest.of(pageNumber, pageSize, sortByAndOrder);
+    //     Page<Product> pageProducts = productRepo.findByProductNameContaining(keyword, pageDetails);
+    //     List<Product> products = pageProducts.getContent();
 
-        if (products.isEmpty()) {
-            throw new APIException("Products not found with keyword: " + keyword);
-        }
+    //     if (products.isEmpty()) {
+    //         throw new APIException("Products not found with keyword: " + keyword);
+    //     }
 
-        List<ProductDTO> productDTOs = products.stream()
-                .map(product -> modelMapper.map(product, ProductDTO.class))
-                .collect(Collectors.toList());
+    //     List<ProductDTO> productDTOs = products.stream()
+    //             .map(product -> modelMapper.map(product, ProductDTO.class))
+    //             .collect(Collectors.toList());
 
-        ProductResponse productResponse = new ProductResponse();
-        productResponse.setContent(productDTOs);
-        productResponse.setPageNumber(pageProducts.getNumber());
-        productResponse.setPageSize(pageProducts.getSize());
-        productResponse.setTotalElements(pageProducts.getTotalElements());
-        productResponse.setTotalPages(pageProducts.getTotalPages());
-        productResponse.setLastPage(pageProducts.isLast());
+    //     ProductResponse productResponse = new ProductResponse();
+    //     productResponse.setContent(productDTOs);
+    //     productResponse.setPageNumber(pageProducts.getNumber());
+    //     productResponse.setPageSize(pageProducts.getSize());
+    //     productResponse.setTotalElements(pageProducts.getTotalElements());
+    //     productResponse.setTotalPages(pageProducts.getTotalPages());
+    //     productResponse.setLastPage(pageProducts.isLast());
 
-        return productResponse;
-    }
-    @Override
+    //     return productResponse;
+    // }
+    // @Override
     public ProductDTO updateProduct(Long productId, Product product) {
         Product productFromDB = productRepo.findById(productId)
                 .orElseThrow(() -> new ResourceNotFoundException("Product", "productId", productId));
@@ -197,7 +185,6 @@ public class ProductServiceImpl implements ProductService {
         product.setImage(productFromDB.getImage());
         product.setProductId(productId);
         product.setCategory(productFromDB.getCategory());
-
 
         Product savedProduct = productRepo.save(product);
 
@@ -227,7 +214,7 @@ public class ProductServiceImpl implements ProductService {
             throw new APIException("Product not found with productId: " + productId);
         }
 
-        String fileName = fileService.uploadImage(basePath, image);
+        String fileName = fileService.uploadImage(path, image);
 
         productFromDB.setImage(fileName);
 
@@ -252,10 +239,29 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public InputStream getProductImage(String fileName) throws FileNotFoundException {
-        return fileService.getResource(productPath, fileName);
+        return fileService.getResource(path, fileName);
     }
-    public String getProductPath() {
-        return productPath;
+
+    @Override
+    public ProductResponse getAllProducts() {
+        throw new UnsupportedOperationException("Unimplemented method 'getAllProducts'");
+    }
+
+    @Override
+    public ProductResponse searchByCategory(Long categoryId, Integer pageNumber, Integer pageSize, String sortBy,
+            String sortOrder) {
+        throw new UnsupportedOperationException("Unimplemented method 'searchByCategory'");
+    }
+
+    @Override
+    public ProductResponse searchProductByKeyword(String keyword, Long categoryId, Integer pageNumber, Integer pageSize,
+            String sortBy, String sortOrder) {
+        throw new UnsupportedOperationException("Unimplemented method 'searchProductByKeyword'");
+    }
+
+    @Override
+    public ProductDTO getProductById(Long productId) {
+        throw new UnsupportedOperationException("Unimplemented method 'getProductById'");
     }
 
 }

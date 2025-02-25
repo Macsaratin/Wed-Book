@@ -1,0 +1,55 @@
+<div class="register-container">
+  <form #registerForm="ngForm" (ngSubmit)="onRegister()" class="register-form">
+    <h2>Sign Up</h2>
+
+    <div class="form-grid">
+      <!-- Cột 1: Thông tin cá nhân -->
+      <div class="form-column">
+        <div class="input-group">
+          <input type="text" [(ngModel)]="user.firstName" name="firstName" required />
+          <label>First Name</label>
+        </div>
+
+        <div class="input-group">
+          <input type="text" [(ngModel)]="user.lastName" name="lastName" required />
+          <label>Last Name</label>
+        </div>
+
+        <div class="input-group">
+          <input type="text" [(ngModel)]="user.mobileNumber" name="mobileNumber" required />
+          <label>Mobile Number</label>
+        </div>
+
+        <div class="input-group">
+          <input type="text" [(ngModel)]="user.email" name="username" required />
+          <label>Username</label>
+        </div>
+
+        <div class="input-group">
+          <input type="password" [(ngModel)]="user.password" name="password" required />
+          <label>Password</label>
+        </div>
+      </div>
+      <div class="form-column">
+        <div class="input-group">
+          <input type="text" [(ngModel)]="user.address.street" name="street" required />
+          <label>Street</label>
+        </div>
+        <div class="input-group">
+          <input type="text" [(ngModel)]="user.address.city" name="city" required />
+          <label>City</label>
+        </div>
+
+        <div class="input-group">
+          <input type="text" [(ngModel)]="user.address.country" name="country" required />
+          <label>Country</label>
+        </div>
+      </div>
+    </div>
+
+    <button type="submit" class="btn-primary" [disabled]="registerForm.invalid">Sign Up</button>
+
+    <p *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</p>
+    <p *ngIf="successMessage" class="alert alert-success">{{ successMessage }}</p>
+  </form>
+</div>

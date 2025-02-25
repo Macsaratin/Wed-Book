@@ -28,7 +28,7 @@ import com.backend.bookwed.payloads.UserResponse;
 import com.backend.bookwed.repository.AddressRepo;
 import com.backend.bookwed.repository.RoleRepo;
 import com.backend.bookwed.repository.UserRepo;
-import com.backend.bookwed.service.CartService;
+// import com.backend.bookwed.service.CartService;
 import com.backend.bookwed.service.UserService;
 
 import jakarta.transaction.Transactional;
@@ -46,8 +46,8 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private AddressRepo addressRepo;
 
-    @Autowired
-    private CartService cartService;
+    // @Autowired
+    // private CartService cartService;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -73,16 +73,13 @@ public class UserServiceImpl implements UserService {
 
             // Fetch or create Address
             String country = userDTO.getAddress().getCountry();
-            String state = userDTO.getAddress().getState();
             String city = userDTO.getAddress().getCity();
-            String pincode = userDTO.getAddress().getPincode();
             String street = userDTO.getAddress().getStreet();
-            String buildingName = userDTO.getAddress().getBuildingName();
-            Address address = addressRepo.findByCountryAndStateAndCityAndPincodeAndStreetAndBuildingName(
-                    country, state, city, pincode, street, buildingName);
+            Address address = addressRepo.findByCountryAndCityAndStreet(
+                    country, city, street);
 
             if (address == null) {
-                address = new Address(country, state, city, pincode, street, buildingName);
+                address = new Address(country, city, street);
                 address = addressRepo.save(address);
             }
 
@@ -276,5 +273,11 @@ public class UserServiceImpl implements UserService {
         } catch (Exception e) {
             throw new APIException("Error retrieving users");
         }
+    }
+
+    @Override
+    public List<UserDTO> getAllUsersWithoutPagination() {
+        List<User> users = userRepo.findAll();
+        return users.stream().map(user -> modelMapper.map(user, UserDTO.class)).collect(Collectors.toList());
     }
 }

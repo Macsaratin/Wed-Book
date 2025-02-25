@@ -1,5 +1,6 @@
 package com.backend.bookwed.entity;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,16 +34,16 @@ public class Product {
     @NotBlank
     @Size(min = 3, message = "Product name must contain atleast 3 characters")
     private String productName;
-
     private String image;
-
     @NotBlank
     @Size(min = 6, message = "Product description must contain atleast 6 characters")
     private String description;
-
     private Integer quantity;
     private double price;
     private double discount;
+    private LocalDate releaseDate;
+    private String bookCondition;
+    private String publisher;
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;

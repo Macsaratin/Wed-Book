@@ -5,30 +5,42 @@ import axios from 'axios';
   providedIn: 'root'
 })
 export class BannerService {
-  private apiUrl = 'http://localhost:8080/api/admin';
+  private apiUrl = 'http://localhost:8080/api';
 
   
   async getBannerByid(id: number) {
+    const token = localStorage.getItem('jwt-token'); 
     try {
-      const response = await axios.get(`${this.apiUrl}/banner/${id}`);
+      const response = await axios.get(`${this.apiUrl}/banner/${id}`,{
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Accept': 'application/json'
+      }
+  }); 
       return response.data;
     } catch (error) {
       console.error("Lỗi khi lấy danh sách banner:", error);
       throw error;
     }
   }
-  async getList() {
+  async getAllBanner() {
     try {
-      const response = await axios.get(`${this.apiUrl}/admin/banner`);
-      return response.data;
+        const token = localStorage.getItem('jwt-token'); 
+        if (!token) throw new Error("Không tìm thấy token!");
+        const response = await axios.get(`${this.apiUrl}/admin/banner`, {
+            headers: {
+                'Authorization': `Bearer ${token}`,
+            }
+        });
+        // console.log("Dữ liệu nhận được từ API:", response.data);
+        return response.data;
     } catch (error) {
-      console.error("Lỗi khi lấy danh sách banner:", error);
-      throw error;
+        console.error("Lỗi khi lấy banner:", error);
+        return [];
     }
-  }
-  // async postbanner(){
+}
 
-  // }
+
   async deleteBanner(id: number) {
     try {
       await axios.get(`${this.apiUrl}/delete/${id}`);

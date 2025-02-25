@@ -17,6 +17,7 @@ import com.backend.bookwed.entity.Banner;
 import com.backend.bookwed.exceptions.APIException;
 import com.backend.bookwed.exceptions.ResourceNotFoundException;
 import com.backend.bookwed.payloads.BannerDTO;
+// import com.backend.bookwed.payloads.BannerResponse;
 import com.backend.bookwed.repository.BannerRepo;
 import com.backend.bookwed.service.BannerService;
 import com.backend.bookwed.service.FileService;
@@ -37,7 +38,7 @@ public class BannerServiceImpl implements BannerService {
     @Autowired
     private ModelMapper modelMapper;
 
-    @Value("${project.image}/banners")
+    @Value("${project.image}/banners/")
     private String basePath;
 
     private String bannerPath;
@@ -66,14 +67,14 @@ public class BannerServiceImpl implements BannerService {
     public List<BannerDTO> getBannerAll() {
         List<Banner> banners = bannerRepo.findAll();
         return banners.stream()
-                .map(banner -> modelMapper.map(banner, BannerDTO.class))
-                .collect(Collectors.toList());
+            .map(banner -> modelMapper.map(banner, BannerDTO.class))
+            .collect(Collectors.toList());
     }
+    
 
     @Override
     public BannerDTO getBannerById(Long bannerId) {
-        Banner banner = bannerRepo.findById(bannerId)
-                .orElseThrow(() -> new ResourceNotFoundException("Banner", "bannerId", bannerId));
+        Banner banner = bannerRepo.findById(bannerId).orElseThrow(() -> new ResourceNotFoundException("Banner", "bannerId", bannerId));
         return modelMapper.map(banner, BannerDTO.class);
     }
 
@@ -144,7 +145,4 @@ public String deleteBanner(Long bannerId) {
     public InputStream getBannerImage(String fileName) throws FileNotFoundException {
         return fileService.getResource(bannerPath, fileName); 
    }
-   public String getBannerPath() {
-    return bannerPath;
-}
 }

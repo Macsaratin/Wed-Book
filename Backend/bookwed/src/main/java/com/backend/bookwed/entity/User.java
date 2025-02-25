@@ -34,10 +34,8 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
 
-    @Size(min = 5, max = 20, message = "First Name must be between 5 and 30 characters long")
     private String firstName;
 
-    @Size(min = 5, max = 20, message = "Last Name must be between 5 and 30 characters long")
 
     private String lastName;
 

@@ -31,13 +31,10 @@ public class AddressServiceImpl implements AddressService {
     @Override
     public AddressDTO createAddress(AddressDTO addressDTO) {
         String country = addressDTO.getCountry();
-        String state = addressDTO.getState();
         String city = addressDTO.getCity();
-        String pincode = addressDTO.getPincode();
         String street = addressDTO.getStreet();
-        String buildingName = addressDTO.getBuildingName();
-        Address addressFromDB = addressRepo.findByCountryAndStateAndCityAndPincodeAndStreetAndBuildingName(country,
-                state, city, pincode, street, buildingName);
+        Address addressFromDB = addressRepo.findByCountryAndCityAndStreet(country,
+                city, street);
         if (addressFromDB != null) {
             throw new APIException("Address already exists with addressId: " + addressFromDB.getAddressId());
         }
@@ -64,18 +61,15 @@ public class AddressServiceImpl implements AddressService {
 
     @Override
     public AddressDTO updateAddress(Long addressId, Address address) {
-        Address addressFromDB = addressRepo.findByCountryAndStateAndCityAndPincodeAndStreetAndBuildingName(
-                address.getCountry(), address.getState(), address.getCity(), address.getPincode(),
-                address.getStreet(), address.getBuildingName());
+        Address addressFromDB = addressRepo.findByCountryAndCityAndStreet(
+                address.getCountry(), address.getCity(),
+                address.getStreet());
         if (addressFromDB == null) {
             addressFromDB = addressRepo.findById(addressId)
                     .orElseThrow(() -> new ResourceNotFoundException("Address", "addressId", addressId));
             addressFromDB.setCountry(address.getCountry());
-            addressFromDB.setState(address.getState());
             addressFromDB.setCity(address.getCity());
-            addressFromDB.setPincode(address.getPincode());
             addressFromDB.setStreet(address.getStreet());
-            addressFromDB.setBuildingName(address.getBuildingName());
             Address updatedAddress = addressRepo.save(addressFromDB);
             return modelMapper.map(updatedAddress, AddressDTO.class);
         } else {

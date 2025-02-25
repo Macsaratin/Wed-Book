@@ -46,14 +46,15 @@ public class BannerController {
 
     @GetMapping("/admin/banner")
     public ResponseEntity<List<BannerDTO>> getbanner() {
-        final List<BannerDTO> bannerDTOs = bannerService.getBannerAll();
-        return new ResponseEntity<List<BannerDTO>>(bannerDTOs, HttpStatus.FOUND);
+         List<BannerDTO> banner = bannerService.getBannerAll();
+        return ResponseEntity.ok(banner);
     }
+
 
     @GetMapping("/admin/banner/{bannerId}")
     public ResponseEntity<BannerDTO> getBanner(@PathVariable Long bannerId) {
         BannerDTO bannerDTO = bannerService.getBannerById(bannerId);
-        return new ResponseEntity<BannerDTO>(bannerDTO, HttpStatus.FOUND);
+        return new ResponseEntity<BannerDTO>(bannerDTO, HttpStatus.OK);
     }
 
     @PutMapping("/admin/banner/{bannerId}")
@@ -75,19 +76,18 @@ public class BannerController {
             BannerDTO updatedBanner = bannerService.updateBannerImage(bannerId, image);
             return new ResponseEntity<>(updatedBanner, HttpStatus.OK);
     }
-    @GetMapping("/public/banners/image/{fileName}")
-        public ResponseEntity<InputStreamResource> getBannerImage(@PathVariable String fileName) throws FileNotFoundException {
-    // Gọi service để lấy ảnh của banner
-    InputStream imageStream = bannerService.getBannerImage(fileName);
-    
-    // Thiết lập headers cho phản hồi HTTP
-    HttpHeaders headers = new HttpHeaders();
-    headers.setContentType(MediaType.IMAGE_PNG);  // Có thể thay đổi loại media nếu không phải PNG
-    headers.setContentDispositionFormData("inline", fileName);
 
-    // Trả về phản hồi với ảnh của banner
-    return new ResponseEntity<>(new InputStreamResource(imageStream), headers, HttpStatus.OK);
-}
+
+    @GetMapping("/public/banners/image/{fileName}")
+    public ResponseEntity<InputStreamResource> getBannerImage(@PathVariable String fileName) throws FileNotFoundException {
+        InputStream imageStream = bannerService.getBannerImage(fileName);
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.IMAGE_PNG);
+        headers.setContentDispositionFormData("inline", fileName);
+
+        return new ResponseEntity<>(new InputStreamResource(imageStream), headers, HttpStatus.OK);
+    }
+
 
 
 }

@@ -3,6 +3,7 @@ package com.backend.bookwed.controller;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+// import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
@@ -25,6 +26,7 @@ import com.backend.bookwed.config.AppConstants;
 import com.backend.bookwed.entity.Product;
 import com.backend.bookwed.payloads.ProductDTO;
 import com.backend.bookwed.payloads.ProductResponse;
+// import com.backend.bookwed.payloads.UserDTO;
 import com.backend.bookwed.service.ProductService;
 
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -50,21 +52,33 @@ public class ProductController {
         return new ResponseEntity<>(productDTO, HttpStatus.OK);
     }
 
-    @GetMapping("/public/products")
-    public ResponseEntity<ProductResponse> getAllProducts(
-            @RequestParam(name = "pageNumber", defaultValue = AppConstants.PAGE_NUMBER, required = false) Integer pageNumber,
-            @RequestParam(name = "pageSize", defaultValue = AppConstants.PAGE_SIZE, required = false) Integer pageSize,
-            @RequestParam(name = "sortBy", defaultValue = AppConstants.SORT_PRODUCTS_BY, required = false) String sortBy,
-            @RequestParam(name = "sortOrder", defaultValue = AppConstants.SORT_DIR, required = false) String sortOrder) {
+    // @GetMapping("/admin/products")
+    // public ResponseEntity<List<ProductDTO>> getAllProducts() {
+    //     List<ProductDTO> products = productService.getAllProductssWithoutPagination();
+    //     return ResponseEntity.ok(products);
+    // }
+    
+    @GetMapping("/admin/products")
+    public ResponseEntity<ProductResponse> getAllProducts() {
+    ProductResponse products = productService.getAllProducts();
+    return ResponseEntity.ok(products);
+}
 
-        ProductResponse productResponse = productService.getAllProducts(
-                pageNumber == 0 ? pageNumber : pageNumber - 1,
-                pageSize,
-                "id".equals(sortBy) ? "productId" : sortBy,
-                sortOrder);
+    // @GetMapping("/public/products")
+    // public ResponseEntity<ProductResponse> getAllProducts(
+    //         @RequestParam(name = "pageNumber", defaultValue = AppConstants.PAGE_NUMBER, required = false) Integer pageNumber,
+    //         @RequestParam(name = "pageSize", defaultValue = AppConstants.PAGE_SIZE, required = false) Integer pageSize,
+    //         @RequestParam(name = "sortBy", defaultValue = AppConstants.SORT_PRODUCTS_BY, required = false) String sortBy,
+    //         @RequestParam(name = "sortOrder", defaultValue = AppConstants.SORT_DIR, required = false) String sortOrder) {
 
-        return new ResponseEntity<ProductResponse>(productResponse, HttpStatus.OK);
-    }
+    //     ProductResponse productResponse = productService.getAllProducts(
+    //             pageNumber == 0 ? pageNumber : pageNumber - 1,
+    //             pageSize,
+    //             "id".equals(sortBy) ? "productId" : sortBy,
+    //             sortOrder);
+
+    //     return new ResponseEntity<ProductResponse>(productResponse, HttpStatus.OK);
+    // }
 
     @GetMapping("/public/categories/{categoryId}/products")
     public ResponseEntity<ProductResponse> getProductsByCategory(@PathVariable Long categoryId,
@@ -102,7 +116,7 @@ public class ProductController {
         return new ResponseEntity<ProductResponse>(productResponse, HttpStatus.OK);
     }
 
-    @GetMapping("/public/products/image/{fileName}")
+   @GetMapping("/public/products/image/{fileName}")
     public ResponseEntity<InputStreamResource> getImage(@PathVariable String fileName) throws FileNotFoundException {
         InputStream imageStream = productService.getProductImage(fileName);
         HttpHeaders headers = new HttpHeaders();

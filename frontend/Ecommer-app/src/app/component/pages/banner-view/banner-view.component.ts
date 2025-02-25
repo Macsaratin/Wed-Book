@@ -8,30 +8,30 @@ import { BannerService } from '../../../service/banner.service';
 })
 export class BannerViewComponent implements OnInit {
 
-  banner: any[] = [];
+  banner: any[]=[];
 
   constructor(private bannerService: BannerService) {}
 
   ngOnInit(): void {
-    this.loadBanners();
+    this.getAllBanner();
   }
 
-  async loadBanners() {
+  async getAllBanner() {
     try {
-      const response = await this.bannerService.getList();
-      this.banner = response.banner;
-    } catch (error) {
-      console.error("Lỗi khi lấy danh sách banner:", error);
-    }
-  }
+        const response = await this.bannerService.getAllBanner();
+        // console.log("Dữ liệu nhận được từ API:", response); 
 
-  async deleteBanner(id: number) {
-    try {
-      await this.bannerService.deleteBanner(id);
-      this.banner = this.banner.filter(b => b.id !== id);
+        if (!Array.isArray(response)) {
+            throw new Error("Dữ liệu API không phải là mảng!");
+        }
+
+        this.banner = response ; 
     } catch (error) {
-      console.error("Lỗi khi xóa banner:", error);
+        console.error("Lỗi khi lấy danh sách user:", error);
+        this.banner = [];
     }
-  }
+}    
+
+  
 
 }

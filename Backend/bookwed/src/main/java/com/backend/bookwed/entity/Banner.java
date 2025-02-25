@@ -25,7 +25,6 @@ public class Banner {
     @NotBlank
     @Size(min = 5, message = "Banner name must contain atleast 5 characters")
     private String bannerName;
-
     private String image;
     
 }

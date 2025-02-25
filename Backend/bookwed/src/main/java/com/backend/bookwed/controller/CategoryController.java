@@ -64,9 +64,9 @@ public class CategoryController {
     @PutMapping("/admin/categories/{categoryId}")
     public ResponseEntity<CategoryDTO> updateCategory(@RequestBody Category category, @PathVariable Long categoryId) {
         CategoryDTO categoryDTO = categoryService.updateCategory(category, categoryId);
-        return new ResponseEntity<CategoryDTO>(categoryDTO, HttpStatus.OK);
+        return new ResponseEntity<>(categoryDTO, HttpStatus.OK);
     }
-
+    
     @DeleteMapping("/admin/categories/{categoryId}")
     public ResponseEntity<String> deleteCategory(@PathVariable Long categoryId) {
         String status = categoryService.deleteCategory(categoryId);

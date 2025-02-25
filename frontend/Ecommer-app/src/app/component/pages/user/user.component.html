@@ -3,12 +3,10 @@
     
     <div class="card">
         <div class="card-body">
-            <h5 class="card-title">Thông tin cá nhân</h5>
+            <h5 class="card-title ">Thông tin cá nhân</h5>
             <p><strong>Tên:</strong> {{ user.firstName }} {{ user.lastName }}</p>
             <p><strong>Email:</strong> {{ user.email }}</p>
-            <p><strong>Phone:</strong> {{ user.mobileNumber }}</p>
-
-            <!-- Nút Logout -->
+            <p><strong>Phone:</strong> {{ user.mobileNumber }}</p>            
             <button class="btn btn-danger mt-3" (click)="logout()">Đăng xuất</button>
         </div>
     </div>

@@ -8,19 +8,25 @@ import { BannerViewComponent } from './component/pages/banner-view/banner-view.c
 
 // Guard để kiểm tra đăng nhập
 import { AuthGuard } from './service/auth.guard';
-import { UserListComponent } from './component/pages/user/user-list.component';
+import { UserListComponent } from './component/pages/user/user-list/user-list.component';
+import { UserEditComponent } from './component/pages/user/user-edit/user-edit.component';
+import { RegisterComponent } from './component/pages/register/register.component';
+import { CategoryViewComponent } from './component/pages/category-view/category-view.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'admin/dashboard', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
+  { path: 'register', component:RegisterComponent },
   {
     path: '',
     component: LayoutComponent,
     canActivate: [AuthGuard], // Kiểm tra đăng nhập trước khi vào layout
     children: [
       { path: 'dashboard', component: DashboardComponent },
+      {path: 'category', component :CategoryViewComponent},
       { path: 'banner', component: BannerViewComponent },
-      { path: 'user-account', component: UserListComponent },
+      { path: 'user-account', component: UserListComponent},
+      { path: 'user-account/edit/:id', component:UserEditComponent },
       { path: 'user', component: UserComponent },
 
 
