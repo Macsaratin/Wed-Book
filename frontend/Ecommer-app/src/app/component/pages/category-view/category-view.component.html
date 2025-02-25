@@ -1,1 +1,23 @@
-<p>category-view works!</p>
+<div class="container">
+    <h2 class="text-center mb-4 mt-3">Danh Sách Người Dùng</h2>
+
+    <table class="table table-bordered text-center">
+        <thead class="table-dark">
+            <tr >
+                <th>#</th>
+                <th>Name</th>
+                <th>Hành động</th>
+            </tr>
+        </thead>
+        <tbody id="user-table-body">
+            <tr *ngFor="let category of category; let i = index">
+                <td>{{category.categoryId}}</td>
+                <td>{{category.categoryName}}</td>
+                <td>
+                    <button class="btn btn-danger btn-sm me-2 ">xoá</button>
+                    <button class="btn btn-primary btn-sm me-2 ">sửa</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

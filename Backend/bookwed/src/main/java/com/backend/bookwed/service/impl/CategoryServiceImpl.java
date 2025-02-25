@@ -11,10 +11,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import com.backend.bookwed.entity.Banner;
 import com.backend.bookwed.entity.Category;
 import com.backend.bookwed.entity.Product;
 import com.backend.bookwed.exceptions.APIException;
 import com.backend.bookwed.exceptions.ResourceNotFoundException;
+import com.backend.bookwed.payloads.BannerDTO;
 import com.backend.bookwed.payloads.CategoryDTO;
 import com.backend.bookwed.payloads.CategoryResponse;
 import com.backend.bookwed.repository.CategoryRepo;
@@ -47,7 +49,13 @@ public class CategoryServiceImpl implements CategoryService {
         Category savedCategory = categoryRepo.save(category);
         return modelMapper.map(savedCategory, CategoryDTO.class);
     }
-
+    @Override
+    public List<CategoryDTO> getCategoryAll() {
+        List<Category> categories = categoryRepo.findAll();
+        return categories.stream()
+            .map(category -> modelMapper.map(category, CategoryDTO.class))
+            .collect(Collectors.toList());
+    }
     @Override
     public CategoryResponse getCategories(Integer pageNumber, Integer pageSize, String sortBy, String sortOrder) {
         // Xử lý phân trang và sắp xếp

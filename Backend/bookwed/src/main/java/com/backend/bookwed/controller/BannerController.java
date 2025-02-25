@@ -41,7 +41,7 @@ public class BannerController {
     @PostMapping("/admin/banner")
     public ResponseEntity<BannerDTO> createBanner(@Valid @RequestBody Banner banner) {
         BannerDTO savedBannerDTO = bannerService.createBanner(banner);
-        return new ResponseEntity<BannerDTO>(savedBannerDTO, HttpStatus.CREATED);
+        return new ResponseEntity<>(savedBannerDTO, HttpStatus.CREATED);
     }
 
     @GetMapping("/admin/banner")
@@ -60,7 +60,7 @@ public class BannerController {
     @PutMapping("/admin/banner/{bannerId}")
     public ResponseEntity<BannerDTO> updateBanner(@PathVariable Long bannerId, @RequestBody Banner banner) {
         BannerDTO bannerDTO = bannerService.updateBanner(bannerId, banner);
-        return new ResponseEntity<BannerDTO>(bannerDTO, HttpStatus.OK);
+        return new ResponseEntity<>(bannerDTO, HttpStatus.OK);
     }
 
     @DeleteMapping("/admin/banner/{bannerId}")

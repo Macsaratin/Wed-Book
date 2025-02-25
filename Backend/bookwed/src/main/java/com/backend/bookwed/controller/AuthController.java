@@ -51,7 +51,7 @@ public ResponseEntity<Map<String, Object>> registerHandler(@Valid @RequestBody U
 
     String token = jwtUtil.generateToken(userDTO.getEmail());
 
-    return new ResponseEntity<Map<String, Object>>(Collections.singletonMap("jwt-token", token),
+    return new ResponseEntity<>(Collections.singletonMap("jwt-token", token),
             HttpStatus.CREATED);
 
 }

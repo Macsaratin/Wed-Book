@@ -1,6 +1,8 @@
 
 package com.backend.bookwed.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -36,8 +38,17 @@ public class CategoryController {
     @PostMapping("/admin/categories")
     public ResponseEntity<CategoryDTO> createCategory(@Valid @RequestBody Category category) {
         CategoryDTO savedCategoryDTO = categoryService.createCategory(category);
-        return new ResponseEntity<CategoryDTO>(savedCategoryDTO, HttpStatus.CREATED);
+        return new ResponseEntity<>(savedCategoryDTO, HttpStatus.CREATED);
     }
+
+    @GetMapping("/admin/categories")
+    public ResponseEntity <List<CategoryDTO>>getCategories(){
+        List<CategoryDTO> category = categoryService.getCategoryAll();
+        return ResponseEntity.ok(category);
+
+
+    }
+    
 
     @GetMapping("/public/categories")
     public ResponseEntity<CategoryResponse> getCategories(
@@ -52,7 +63,7 @@ public class CategoryController {
                 "id".equals(sortBy) ? "categoryId" : sortBy,
                 sortOrder);
 
-        return new ResponseEntity<CategoryResponse>(categoryResponse, HttpStatus.OK);
+        return new ResponseEntity<>(categoryResponse, HttpStatus.OK);
     }
 
     @GetMapping("/public/categories/{categoryId}")
@@ -71,6 +82,6 @@ public class CategoryController {
     public ResponseEntity<String> deleteCategory(@PathVariable Long categoryId) {
         String status = categoryService.deleteCategory(categoryId);
 
-        return new ResponseEntity<String>(status, HttpStatus.OK);
+        return new ResponseEntity<>(status, HttpStatus.OK);
     }
 }
