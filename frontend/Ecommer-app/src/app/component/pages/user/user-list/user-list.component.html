@@ -1,6 +1,5 @@
 <div class="container mt-4">
     <h2 class="text-center mb-4">Danh Sách Người Dùng</h2>
-
     <div class="table-responsive">
         <table class="table table-bordered text-center">
             <thead class="table-dark">
@@ -29,7 +28,7 @@
                 </tr>
             </tbody>
         </table>
-        <pagination-controls class="paginate" (pageChange)="currentPage = $event"></pagination-controls>
+        <!-- <pagination-controls class="paginate" (pageChange)="setPage($event)"></pagination-controls> -->
     </div>
 
     <div *ngIf="!users || users.length === 0" class="text-center mt-3">

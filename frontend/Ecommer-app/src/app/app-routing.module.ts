@@ -12,6 +12,7 @@ import { UserListComponent } from './component/pages/user/user-list/user-list.co
 import { UserEditComponent } from './component/pages/user/user-edit/user-edit.component';
 import { RegisterComponent } from './component/pages/register/register.component';
 import { CategoryViewComponent } from './component/pages/category-view/category-view.component';
+import { BannerPostComponent } from './component/pages/banner-post/banner-post.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'admin/dashboard', pathMatch: 'full' },
@@ -25,6 +26,8 @@ const routes: Routes = [
       { path: 'dashboard', component: DashboardComponent },
       {path: 'category', component :CategoryViewComponent},
       { path: 'banner', component: BannerViewComponent },
+      { path: 'banner-create', component: BannerPostComponent },
+
       { path: 'user-account', component: UserListComponent},
       { path: 'user-account/edit/:id', component:UserEditComponent },
       { path: 'user', component: UserComponent },

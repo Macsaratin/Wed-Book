@@ -3,7 +3,7 @@ import { UserService } from '../../../../service/user.service';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-user',
+  selector: 'app-user-list',
   templateUrl: './user-list.component.html',
 })
 export class UserListComponent implements OnInit {
@@ -16,6 +16,10 @@ export class UserListComponent implements OnInit {
     ngOnInit() {
         this.getAllUser();
     }
+    setPage(event: number) {
+        this.currentPage = event;
+      }
+      
     async getAllUser() {
         try {
             const response = await this.userService.getList();

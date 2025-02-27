@@ -47,6 +47,7 @@ public class User {
     @Column(unique = true, nullable = false)
     private String email;
 
+    @Size(min =5, message = "Password must contain atleast 5 characters")
     private String password;
 
     @ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE }, fetch = FetchType.EAGER)

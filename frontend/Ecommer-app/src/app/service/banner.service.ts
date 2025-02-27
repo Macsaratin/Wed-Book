@@ -29,7 +29,7 @@ export class BannerService {
         if (!token) throw new Error("Không tìm thấy token!");
         const response = await axios.get(`${this.apiUrl}/admin/banner`, {
             headers: {
-                'Authorization': `Bearer ${token}`,
+                'Authorization': 'application/json',
             }
         });
         // console.log("Dữ liệu nhận được từ API:", response.data);
@@ -38,6 +38,24 @@ export class BannerService {
         console.error("Lỗi khi lấy banner:", error);
         return [];
     }
+}
+
+async postBanner() {
+  try{
+    const token = localStorage .getItem('jw-token');
+    if (!token) throw new Error("Không tìm thấy token!");
+    const response = await axios.post(`${this.apiUrl}/admin/banner`,{
+    Headers:{
+      Authorization: `Bearer ${token}`,
+      'Content-Type': ' application/json',
+    }
+  });
+  return response.data;
+
+  }catch (error: any) {
+    console.error('Lỗi khi thêm banner:', error.response?.data || error.message);
+    throw error;
+  }
 }
 
 
